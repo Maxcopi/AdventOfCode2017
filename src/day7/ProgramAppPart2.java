@@ -10,7 +10,7 @@ public class ProgramAppPart2 {
 
 	public static void main(String[] args) throws FileNotFoundException {
 		// TODO Auto-generated method stub
-		Scanner fileReader = new Scanner(new File("src/day7/test.txt"));
+		Scanner fileReader = new Scanner(new File("src/day7/programs.txt"));
 
 		ArrayList<Program> programs = new ArrayList();
 
@@ -47,11 +47,37 @@ public class ProgramAppPart2 {
 			program.setChildren(programs);
 		}
 		
+
+		
 		for(Program program : programs) {
-			if(program.getChildNames().isEmpty() == false) {
-				System.out.println("size " + program.getSumWeight() + " children:" + program.getChildren().size());
+			
+			if(program.getName().equals("rqwgj")){
+				for(Program child : program.getChildren()) {
+					int sum =0;
+					System.out.println(child.getName() + " " + child.getSumWeight());
+					for(Program grandchild : child.getChildren()) {
+						System.out.println("\t " + grandchild.getName() + " " + grandchild.getSumWeight());
+						sum+=grandchild.getSumWeight();
+						for(Program greatgrandchild : grandchild.getChildren()) {
+							System.out.println("\t\t" + greatgrandchild.getName() + " " + greatgrandchild.getSumWeight());
+							for(Program greatgreatgrandchild : greatgrandchild.getChildren()) {
+								System.out.println("\t\t\t" + greatgreatgrandchild.getName() + " " + greatgreatgrandchild.getSumWeight());
+								for(Program greatgreatgreatgrandchild : greatgreatgrandchild.getChildren()) {
+									System.out.println("\t\t\t\t" + greatgreatgreatgrandchild.getName() + " " + greatgreatgreatgrandchild.getSumWeight());
+									
+								}
+
+							}
+							
+						}
+						
+					}System.out.println(sum);
+				}
+				
 			}
 		}
+		
+		
 		
 		
 		

@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class Part2 {
 
 	public static void main(String[] args) throws FileNotFoundException {
-		Scanner fileReader = new Scanner(new File("src/day4/test.txt"));
+		Scanner fileReader = new Scanner(new File("src/day4/phrases.txt"));
 		ArrayList<String> phrases = new ArrayList<String>();
 		while (fileReader.hasNext()){
 		    phrases.add(fileReader.nextLine());
@@ -19,40 +19,30 @@ public class Part2 {
 		int validPhraseCount = 0;
 		String words[];
 		
+		char sortedCurrent[];
+		char sortedCompare[];
+		boolean valid;
+		
 		for(String phrase : phrases) {
 			words = splitToArray(phrase);
-			
-			char[] karaktersCurrentWord;
-			boolean valid = false;
+			valid = true;
 			for(int i=0; i < words.length; i++) {
-				karaktersCurrentWord = new char[words[i].length()];
-				for(int charPos=0; charPos < words[i].length(); charPos++) {
-					karaktersCurrentWord[charPos] = words[i].charAt(charPos);
-				}
-				char[] karaktersCompareWord;
+				sortedCurrent = getSortedCharArray(words[i]);
 				for(int j=0; j < words.length; j++) {
 					if(i != j) {
-						karaktersCompareWord = new char[words[j].length()];
-						for(int charPosComp=0; charPosComp < karaktersCompareWord.length; charPosComp++) {
-							karaktersCurrentWord[charPosComp] = words[j].charAt(charPosComp);
-						}
-						Arrays.sort(karaktersCurrentWord);
-						Arrays.sort(karaktersCompareWord);
-						if(karaktersCurrentWord.length == karaktersCompareWord.length) {
-							if(Arrays.equals(karaktersCurrentWord, karaktersCompareWord)) {
-								valid = true;
+						sortedCompare = getSortedCharArray(words[j]);
+						if(sortedCompare.length == sortedCurrent.length) {
+							if(Arrays.equals(sortedCurrent, sortedCompare)) {
+								valid = false;
 							}
 						}
-						
 					}
+					
 				}
 				
-				
-				
-				
-				if(valid) {
-					validPhraseCount++;
-				}
+			}	
+			if(valid) {
+				validPhraseCount++;
 			}
 		}
 		
@@ -93,6 +83,17 @@ public class Part2 {
 		}
 		
 		return words;
+	}
+	
+	public static char[] getSortedCharArray(String word) {
+		char[] sorted = new char[word.length()];
+		
+		for(int i=0; i < word.length(); i++) {
+			sorted[i] = word.charAt(i);
+		}
+		Arrays.sort(sorted);
+		
+		return sorted;
 	}
 
 }

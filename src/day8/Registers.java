@@ -26,6 +26,7 @@ public class Registers {
 		fileReader = new Scanner(new File("src/day8/instructions.txt"));
 		
 		int greatest = 0;
+		
 		while(fileReader.hasNext()) {
 			String line = fileReader.nextLine();
 			
@@ -50,6 +51,7 @@ public class Registers {
 			 	*	registerValue operator valueOperation;	
 			 * }
 			 */
+			System.out.print(registerValue + " " + valueOperation + " ");
 			
 			registerValue = processStatement(registerValue, registerValueToCompare, numberCompare, comparer, operator, valueOperation);
 			
@@ -61,13 +63,10 @@ public class Registers {
 				}
 			}
 			
+			System.out.println(operator + " " + registerValue + register);
+			
 		}
 		System.out.println(greatest);
-
-		for(int i=0; i < registerValues.length; i++) {
-			System.out.println(registerNames.get(i) + " " + registerValues[i]);
-		}
-		
 	}
 	public static int getRegisterValue(int[] values, ArrayList<String> names, String register) {
 		
@@ -93,12 +92,14 @@ public class Registers {
 	}
 	
 	public static int calculateRegisterValue(String operator, int value, int registerValue) {
-		
+
 		if(operator.equals("dec")) {
 			value *= -1;
 		}
-		
+			
 		registerValue += value;
+		
+		
 		
 		return registerValue;
 	}
@@ -109,33 +110,39 @@ public class Registers {
 		case "==": 
 			if(registerValueToCompare == numberCompare) {
 				return calculateRegisterValue(operator, valueOperation, registerValue);
+			} else {
+				return registerValue;
 			}
-			break;
 		case ">=": 
 			if(registerValueToCompare >= numberCompare) {
 				return calculateRegisterValue(operator, valueOperation, registerValue);
+			} else {
+				return registerValue;
 			}
-			break;
 		case "<=": 
 			if(registerValueToCompare <= numberCompare) {
 				return calculateRegisterValue(operator, valueOperation, registerValue);
+			} else {
+				return registerValue;
 			}
-			break;
 		case "<": 
 			if(registerValueToCompare < numberCompare) {
 				return calculateRegisterValue(operator, valueOperation, registerValue);
+			} else {
+				return registerValue;
 			}
-			break;
 		case ">": 
 			if(registerValueToCompare > numberCompare) {
 				return calculateRegisterValue(operator, valueOperation, registerValue);
+			} else {
+				return registerValue;
 			}
-			break;
 		case "!=": 
 			if(registerValueToCompare != numberCompare) {
 				return calculateRegisterValue(operator, valueOperation, registerValue);
+			} else {
+				return registerValue;
 			}
-			break;
 		}
 		
 		

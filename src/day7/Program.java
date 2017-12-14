@@ -7,6 +7,7 @@ public class Program {
 	private int weight;
 	private ArrayList<String> childNames;
 	private ArrayList<Program> children = new ArrayList();
+	private ArrayList<Program> parents = new ArrayList();
 	private int sumWeight;
 	
 	public Program(String name, int weight, ArrayList<String> children) {
@@ -39,7 +40,10 @@ public class Program {
 				}
 			}
 		}
-		
+	}
+	
+	public ArrayList<Program> getParents() {
+		return parents;
 	}
 	
 	public int getSumWeight() {
