@@ -12,57 +12,77 @@ public class StreamProcessing {
 		
 		Scanner fileHandler = new Scanner(new File("src/day9/input"));
 		
-		String input = fileHandler.nextLine();
-		int groupDepth = 0;
-		int garbageDepth = 0;
-		int groupScore = 0;
-		int garbageScore = 0;
-		int groupsClosed = 0;
+		StringBuilder input = new StringBuilder(fileHandler.nextLine());
 		
-		boolean garbage = false;
-		boolean skipNext = false;
+
+	    removeAllAfterExclamation(input);
+	    
+	    int garbageRemoved = removeAllGarbage(input);
+	    
+	    int points = calculatePoints(input.toString());
+	    
+	    System.out.println(input.toString());
+	    System.out.println(points);
+	    System.out.println(garbageRemoved);
+	}
+	
+	public static void removeAllAfterExclamation(StringBuilder input) {
+		for(int i=0; i < input.length(); i++) {
+			if(input.charAt(i)=='!') {
+				input.deleteCharAt(i+1);
+				input.deleteCharAt(i);
+				i--;
+			}
+		}
+	}
+	
+	public static int removeAllGarbage(StringBuilder input) {
+		boolean inGarbage = false;
+		int garbageCount = 0;
+		boolean counted = false;
 		
-		char currentChar;
+		for(int i=0; i < input.length(); i++) {
+			if(input.charAt(i)=='<') {
+				inGarbage = true;
+				counted = true;
+			} else {
+				if(input.charAt(i) == '>') {
+					inGarbage = false;
+					garbageCount--;
+					input.deleteCharAt(i);
+				} else {
+					
+				}
+			}
+			if(inGarbage == true) {
+				input.deleteCharAt(i);
+				garbageCount++;
+				i--;
+			}
+			
+		}
 		
-	    for(int i=0; i < input.length(); i++) {
-	    	currentChar = input.charAt(i);
-	    	
-	    	switch(currentChar) {
-	    	case '{': groupDepth++;
-	    		break;
-	    	case '}': 
-	    		if(groupDepth > 0) {
-	    			if(skipNext == false) {
-	    				groupScore += groupDepth;
-	    			} else {
-	    				skipNext = false;
-	    			}
-	    			
-	    		}
-	    		groupDepth--;
-	    		garbageDepth=0;
-	    		break;
-	    	case '!' : 
-	    		if(skipNext == true) {
-	    			skipNext = false;
-	    		} else {
-	    			skipNext = true;
-	    		}
-	    		
-	    		break;	
-	    	case '<' : garbage=true;
-	    		break;
-	    	case '>' : 
-	    		garbage = false;
-	    		break;
-	    	default: garbage = true;
-	    	}
-	    	System.out.print(currentChar);
-	    }
-	    System.out.println();
-	    System.out.println("groupscore: " + groupScore);
-    	System.out.println("garbagescore: " + garbageScore);
-    	System.out.println(groupScore + garbageScore);
+		return garbageCount;
+	}
+	
+	public static int calculatePoints(String input) {
+		int points = 0;
+		int depth = 0;
+		
+		for(int i=0; i < input.length(); i++) {
+			if(input.charAt(i) == '{') {
+				depth++;
+			} else {
+				if(input.charAt(i) == '}') {
+					points += depth;
+					if(depth > 0) {
+						depth--;
+					}
+				}
+			}
+		}
+		
+		return points;
 		
 	}
 

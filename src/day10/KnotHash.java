@@ -15,23 +15,15 @@ public class KnotHash {
 		
 		
 		for(int amountOfNumbers : input) {
-			
 			length = new int[amountOfNumbers];
-			
 			makeSelection(amountOfNumbers, currentPosition, length, knotList);
-			
 			reverseSelection(length);
-			
 			insertReverseIntoList(currentPosition, length, knotList);
-			
 			currentPosition += skipSize + amountOfNumbers;
-			
 			while(currentPosition > knotList.length) {
 				currentPosition -= knotList.length;
 			}
-			
 			skipSize++;
-			
 		}
 		
 		System.out.println(knotList[0] * knotList[1]);
